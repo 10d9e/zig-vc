@@ -67,3 +67,20 @@ fn calculateMerkleRootInternal(nodes: [0]crypto.Hash, algorithm: crypto.HashAlgo
 
     return calculateMerkleRootInternal(nextLevel, algorithm);
 }
+
+test "Vector Commitment Scheme" {
+    var leafData: []const u8 = undefined;
+    leafData = leafData ++ &[_]u8{ 'H', 'e', 'l', 'l', 'o' };
+    leafData = leafData ++ &[_]u8{ 'W', 'o', 'r', 'l', 'd' };
+    leafData = leafData ++ &[_]u8{ 'M', 'e', 'r', 'k', 'l', 'e' };
+    leafData = leafData ++ &[_]u8{ 'R', 'o', 'o', 't' };
+
+    const algorithm = crypto.HashAlgorithm.sha256;
+
+    const vc = new(algorithm);
+
+    const computedRoot = try vc.commit(leafData);
+    testing.expect(vc.verify(leafData, computedRoot));
+    testing.expect(!vc.verify(leafData[0..3], computedRoot));
+    testing.expect(!vc.verify(leafData, computedRoot[0..30]));
+}
