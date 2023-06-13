@@ -1,6 +1,6 @@
 # zig-vc
 
-# Vector Commitment
+# Zig Vector Commitment Library
 
 This repository contains an implementation of a Vector Commitment scheme in Zig. Vector Commitments are cryptographic primitives that allow for the commitment and verification of a set of elements, commonly referred to as a vector.
 
